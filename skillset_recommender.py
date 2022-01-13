@@ -6,6 +6,7 @@ import faiss
 from sentence_transformers import SentenceTransformer, util
 # import pickle
 from streamlit_tags import st_tags
+import time
 
 
 data = pd.read_csv('bgt_skills_5k.csv')
