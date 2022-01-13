@@ -10,7 +10,7 @@ from streamlit_tags import st_tags
 
 data = pd.read_csv('bgt_skills_5k.csv')
 data = data['skills'].unique()
-summary_tfidf = pd.read_csv("similarity_matrix (1).csv",index_col='Occupation')
+summary_tfidf = pd.read_csv("similarity_matrix.csv",index_col='Occupation')
 index = faiss.read_index('bgt_top5k_skills')
 
 st.title('Job Recommender')
@@ -35,8 +35,8 @@ def search(query):
 for skill in list_of_skills:
     query = skill
     skill_chosen.append(search(query)[0])
-    
-    
+
+
 st.write('Skill Matches: ')
 st.success(skill_chosen)
 
@@ -45,7 +45,7 @@ def ideal_job(df,skills_chosen):
     df_new = df[skills_chosen]
     df_new['count'] = df_new.count(axis=1)
     df_new['avg'] = df_new.mean(axis=1)
-   
+
     df_new = df_new.sort_values(by=['count','avg'],ascending=False)
     df_new = df_new.head(30)
 
@@ -54,12 +54,12 @@ def ideal_job(df,skills_chosen):
 
     for i in skills_chosen:
         df_new[i] = pd.cut(df_new[i], bins, labels=names)
-    
+
     df_new = df_new[skills_chosen]
 
     return df_new
 
-     
+
 with st.spinner('Wait for it...'):
     time.sleep(2)
 
